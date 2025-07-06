@@ -18,6 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Novusnet.Aplicacion\Novusnet.Aplicacion.csproj" />
+    <ProjectReference Include="..\Novusnet.Dominio.Modelo\Novusnet.Dominio.Modelo.csproj" />
+    <ProjectReference Include="..\Novusnet.Infraestructura.AccesoDatos\Novusnet.Infraestructura.AccesoDatos.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 

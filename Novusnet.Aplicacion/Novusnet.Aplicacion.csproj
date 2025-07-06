@@ -12,4 +12,8 @@
     <ProjectReference Include="..\Novusnet.Infraestructura.AccesoDatos\Novusnet.Infraestructura.AccesoDatos.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.ServiceModel.Primitives" Version="8.1.2" />
+  </ItemGroup>
+
 </Project>

@@ -23,9 +23,11 @@ public partial class Cliente
 
     public string cli_referencia_ubicacion { get; set; }
 
-    public DateOnly? cli_fecha_registro { get; set; }
+    public DateTime? cli_fecha_registro { get; set; }
 
     public int? cli_activo { get; set; }
 
     public virtual ICollection<Servicio> Servicio { get; set; } = new List<Servicio>();
+
+    
 }
