@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Novusnet.Aplicacion.ServicioImpl
 {
     public class ClienteServicoImpl : IClienteServicio
-        
+
     {
         private IClienteRepositorio _clienteRepositorio;
 
@@ -24,8 +24,7 @@ namespace Novusnet.Aplicacion.ServicioImpl
 
 
         }
-
-        async Task IClienteServicio.ClienteAddAsync(Cliente entidad)
+        public async Task ClienteAddAsync(Cliente entidad)
         {
             await _clienteRepositorio.AddAsync(entidad);
 
@@ -34,13 +33,13 @@ namespace Novusnet.Aplicacion.ServicioImpl
 
         async Task IClienteServicio.ClienteDeleteAsync(int entidad)
         {
-        
+
             await _clienteRepositorio.DeleteAsync(entidad);
         }
 
         async Task<IEnumerable<Cliente>> IClienteServicio.ClienteGetAllAsync()
         {
-            return  await _clienteRepositorio.GetAllAsync();    
+            return await _clienteRepositorio.GetAllAsync();
         }
 
         async Task<Cliente> IClienteServicio.ClienteGetByIdAsync(int id)
@@ -51,6 +50,18 @@ namespace Novusnet.Aplicacion.ServicioImpl
         async Task IClienteServicio.ClienteUpdateAsync(Cliente entidad)
         {
             await _clienteRepositorio.UpdateAsync(entidad);
+        }
+
+        private IClienteRepositorio Get_clienteRepositorio()
+        {
+            return _clienteRepositorio;
+        }
+
+        
+
+        public Task<List<Cliente>> ListarClientesActivos()
+        {
+            return _clienteRepositorio.ListarClientesActivos();
         }
     }
 }
