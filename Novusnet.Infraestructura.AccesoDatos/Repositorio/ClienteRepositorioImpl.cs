@@ -33,9 +33,6 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
                     throw new Exception("Error Listar Clientes Activos:" + ex.Message);
 
                 }
-
-
-
             }
         }
 

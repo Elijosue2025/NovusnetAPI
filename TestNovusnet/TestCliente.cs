@@ -25,22 +25,35 @@ namespace TestNovusnet
         [Test]
         public async Task TestInsertarCliente()
         {
-            var cliente = new Cliente
+
+            /*
+             Primer Incer en la tabla cliente
+        Nota:CEDULA ES UNIQUEY (Hay que cambiar el parametro en cada incert)
+             
+             */
+            /*    var cliente = new Cliente
+                {
+                    cli_cedula = "000000003",
+                    cli_nombre = "Katya",
+                    cli_apellido = "Valladares",
+                    cli_telefono = "0000000000",
+                    cli_email = "test@example.com",
+                    cli_direccion = "TestDireccion",
+                    cli_referencia_ubicacion = "Referencia X",
+                    cli_fecha_registro = new DateTime(2025, 7, 13),
+                    cli_activo = 1
+                };
+
+                await _ClienteServicio.ClienteAddAsync(cliente);
+
+                Assert.Pass("Cliente insertado correctamente.");*/
+
+            var Resultado = await _ClienteServicio.ListarClientesActivos();
+            foreach (var item in Resultado)
             {
-                cli_cedula = "000000003",
-                cli_nombre = "Katya",
-                cli_apellido = "Valladares",
-                cli_telefono = "0000000000",
-                cli_email = "test@example.com",
-                cli_direccion = "TestDireccion",
-                cli_referencia_ubicacion = "Referencia X",
-                cli_fecha_registro = new DateTime(2025, 7, 13),
-                cli_activo = 1
-            };
-
-            await _ClienteServicio.ClienteAddAsync(cliente);
-
-            Assert.Pass("Cliente insertado correctamente.");
+                Console.WriteLine(item);
+                
+            }
         }
 
         [TearDown]
