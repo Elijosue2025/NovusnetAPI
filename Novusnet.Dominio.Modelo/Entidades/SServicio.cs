@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Novusnet.Infraestructura.AccesoDatos;
 
-public partial class Servicio
+public partial class SServicio
 {
     public int pk_servicio { get; set; }
 

@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Novusnet.Dominio.Modelo.Abstracciones
 {
-    public interface IServicioRepositorio : IRepositorio<Servicio>
+    public interface IServicioRepositorio : IRepositorio<SServicio>
+
     {
-        Task<List<Servicio>> ListarServiciosActivos();
+        Task<List<SServicio>> ListarServiciosActivos();
+
 
     }
 }

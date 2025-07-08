@@ -27,7 +27,7 @@ public partial class Cliente
 
     public int? cli_activo { get; set; }
 
-    public virtual ICollection<Servicio> Servicio { get; set; } = new List<Servicio>();
+    public virtual ICollection<SServicio> Servicio { get; set; } = new List<SServicio>();
 
     
 }

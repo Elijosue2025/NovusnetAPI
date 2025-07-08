@@ -29,7 +29,7 @@ public partial class NovusnetPROContext : DbContext
 
     public virtual DbSet<Orden_Trabajo> Orden_Trabajo { get; set; }
 
-    public virtual DbSet<Servicio> Servicio { get; set; }
+    public virtual DbSet<SServicio> Servicio { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -203,7 +203,7 @@ public partial class NovusnetPROContext : DbContext
                 .HasConstraintName("FK__Orden_Tra__fk_se__48CFD27E");
         });
 
-        modelBuilder.Entity<Servicio>(entity =>
+        modelBuilder.Entity<SServicio>(entity =>
         {
             entity.HasKey(e => e.pk_servicio).HasName("PK__Servicio__DB19714103B7E56B");
 

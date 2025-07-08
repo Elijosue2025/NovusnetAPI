@@ -7,10 +7,18 @@ using System.Threading.Tasks;
 
 namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
 {
-    public class ServicioRepositorioImpl : RepositorioImpl<Servicio>, 
+    public class ServicioRepositorioImpl : RepositorioImpl<SServicio>, IServicioRepositorio
     {
-        public ServicioRepositorioImpl(NovusnetPROContext dBcontext) : base(dBcontext)
+        private readonly NovusnetPROContext _novusnetPROContext;
+
+        public ServicioRepositorioImpl(NovusnetPROContext dBContext) : base(dBContext)
         {
+            _novusnetPROContext = dBContext;
+        }
+
+        public Task<List<SServicio>> ListarServiciosActivos()
+        {
+            throw new NotImplementedException();
         }
     }
 }

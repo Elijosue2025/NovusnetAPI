@@ -31,5 +31,5 @@ public partial class Orden_Trabajo
 
     public virtual Empleado fk_EmpleadoNavigation { get; set; }
 
-    public virtual Servicio fk_servicioNavigation { get; set; }
+    public virtual SServicio fk_servicioNavigation { get; set; }
 }
