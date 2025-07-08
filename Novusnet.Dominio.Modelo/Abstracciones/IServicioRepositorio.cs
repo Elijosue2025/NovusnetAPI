@@ -9,6 +9,7 @@ namespace Novusnet.Dominio.Modelo.Abstracciones
 {
     public interface IServicioRepositorio : IRepositorio<Servicio>
     {
+        Task<List<Servicio>> ListarServiciosActivos();
 
     }
 }

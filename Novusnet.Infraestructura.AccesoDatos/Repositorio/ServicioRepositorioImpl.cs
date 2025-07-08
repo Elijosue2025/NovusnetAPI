@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
 {
-    public class ServicioRepositorioImpl : RepositorioImpl<Servicio>, IServicioRepositorio
+    public class ServicioRepositorioImpl : RepositorioImpl<Servicio>, 
     {
         public ServicioRepositorioImpl(NovusnetPROContext dBcontext) : base(dBcontext)
         {
