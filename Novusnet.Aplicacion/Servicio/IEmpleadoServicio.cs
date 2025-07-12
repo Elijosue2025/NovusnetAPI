@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Novusnet.Aplicacion.Servicio
 {
-    public interface IEmpleadoServicio 
+    public interface IEmpleadoServicio
     {
         [OperationContract]
 
@@ -28,6 +28,6 @@ namespace Novusnet.Aplicacion.Servicio
 
         [OperationContract]
 
-        Task<List<Cliente>> ListarEmpleadoRoll);
+        Task<List<Cliente>> ListarEmpleadoRoll();
     }
 }

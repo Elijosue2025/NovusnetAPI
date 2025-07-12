@@ -10,6 +10,6 @@ namespace Novusnet.Dominio.Modelo.Abstracciones
     public interface IMaterialRepositorio : IRepositorio<Material>
     {
         Task<List<Material>> ListarMaterialStock();
-        
+
     }
 }

@@ -25,7 +25,7 @@ namespace Novusnet.Aplicacion.ServicioImpl
 
         public async Task AddAsync(Orden_Material entidad)
         {
-            await _ordenMaterialRepositorio.AddAsync(entidad);  
+            await _ordenMaterialRepositorio.AddAsync(entidad);
         }
 
         public async Task UpdateAsync(Orden_Material entidad)

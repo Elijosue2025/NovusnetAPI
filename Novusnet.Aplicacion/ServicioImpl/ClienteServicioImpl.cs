@@ -57,7 +57,7 @@ namespace Novusnet.Aplicacion.ServicioImpl
             return _clienteRepositorio;
         }
 
-        
+
 
         public Task<List<Cliente>> ListarClientesActivos()
         {

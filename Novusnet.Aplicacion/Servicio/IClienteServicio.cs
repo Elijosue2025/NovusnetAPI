@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Novusnet.Aplicacion.Servicio
 {
-    
+
     [ServiceContract]
     public interface IClienteServicio
     {
@@ -34,7 +34,7 @@ namespace Novusnet.Aplicacion.Servicio
         [OperationContract]
 
         Task<List<Cliente>> ListarClientesActivos();
-       
+
 
     }
 }

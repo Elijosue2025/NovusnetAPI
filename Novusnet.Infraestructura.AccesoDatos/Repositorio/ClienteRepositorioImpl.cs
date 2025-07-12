@@ -19,8 +19,7 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
 
         public Task<List<Cliente>> ListarClientesActivos()
         {
-            throw new NotImplementedException();
-            {
+            
                 try
                 {
                     var Resultado = from tmCliente in _novusnetPROContext.Cliente
@@ -33,7 +32,7 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
                     throw new Exception("Error Listar Clientes Activos:" + ex.Message);
 
                 }
-            }
+            
         }
 
     }

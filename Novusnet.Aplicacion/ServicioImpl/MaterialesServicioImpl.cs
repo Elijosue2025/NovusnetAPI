@@ -20,7 +20,7 @@ namespace Novusnet.Aplicacion.ServicioImpl
 
         public MaterialesServicioImpl(NovusnetPROContext novusnetPROContext)
         {
-           this._dBContext = novusnetPROContext;
+            this._dBContext = novusnetPROContext;
             _materialRepositorio = new MarerialRepositorioImpl(novusnetPROContext);
 
 
@@ -38,13 +38,13 @@ namespace Novusnet.Aplicacion.ServicioImpl
 
         public async Task MaterialDeleteAsync(int entidad)
         {
-         await _materialRepositorio.DeleteAsync(entidad);
+            await _materialRepositorio.DeleteAsync(entidad);
         }
 
         public Task<IEnumerable<Material>> MaterialGetAllAsync()
         {
 
-        return _materialRepositorio.GetAllAsync();  
+            return _materialRepositorio.GetAllAsync();
         }
 
         public Task<Material> MaterialGetByIdAsync(int id)
@@ -54,8 +54,8 @@ namespace Novusnet.Aplicacion.ServicioImpl
 
         public Task<List<Material>> ListarMaterialStock()
         {
-           // return _clienteRepositorio.ListarClientesActivos();
-           return _materialRepositorio.ListarMaterialStock();
+            // return _clienteRepositorio.ListarClientesActivos();
+            return _materialRepositorio.ListarMaterialStock();
         }
     }
 }

@@ -33,6 +33,6 @@ namespace Novusnet.Aplicacion.Servicio
         Task<List<Material>> ListarMaterialStock();
 
 
-    
-     }
+
+    }
 }

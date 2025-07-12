@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Novusnet.Dominio.Modelo.Abstracciones
 {
 
-    public interface IRepositorio <T> where T : class
+    public interface IRepositorio<T> where T : class
     {
         Task AddAsync(T entidad); //metdo para insertar
         Task UpdateAsync(T entidad); //metodo para actualizar 

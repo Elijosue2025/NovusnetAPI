@@ -52,7 +52,7 @@ namespace TestNovusnet
             foreach (var item in Resultado)
             {
                 Console.WriteLine(item);
-                
+
             }
         }
 

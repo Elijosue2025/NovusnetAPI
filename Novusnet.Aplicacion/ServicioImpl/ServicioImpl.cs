@@ -12,21 +12,12 @@ namespace Novusnet.Aplicacion.ServicioImpl
         private readonly IServicioRepositorio _servicioRepositorio;
         private readonly NovusnetPROContext _dBContext;
 
-        public ServicioImpl()
-        {
-        }
+     
 
         public ServicioImpl(NovusnetPROContext dBContext)
         {
             this._dBContext = dBContext;
             _servicioRepositorio = new ServicioRepositorioImpl(_dBContext);
-
-
-        }
-
-        public Task<List<SServicio>> ListarServicioActivos()
-        {
-            return _servicioRepositorio.ListarServiciosActivos();
 
         }
 
@@ -53,6 +44,13 @@ namespace Novusnet.Aplicacion.ServicioImpl
         public async Task ServicioUpdateAsync(SServicio entidad)
         {
             await _servicioRepositorio.UpdateAsync(entidad);
+        }
+        
+
+        public Task<List<SServicio>> ListarServiciosConMateriales()
+        {
+
+            return _servicioRepositorio.ListarServiciosConMateriales();
         }
     }
 }

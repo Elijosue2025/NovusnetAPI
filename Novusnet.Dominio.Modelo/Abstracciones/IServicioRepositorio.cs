@@ -10,7 +10,7 @@ namespace Novusnet.Dominio.Modelo.Abstracciones
     public interface IServicioRepositorio : IRepositorio<SServicio>
 
     {
-        Task<List<SServicio>> ListarServiciosActivos();
+        Task<List<SServicio>> ListarServiciosConMateriales();
 
 
     }

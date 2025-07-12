@@ -27,7 +27,7 @@ namespace Novusnet.Aplicacion.ServicioImpl
         public async Task EmpleadoAddAsync(Empleado entidad)
         {
 
-            await _empleadoServicio.EmpleadoAddAsync(entidad);    
+            await _empleadoServicio.EmpleadoAddAsync(entidad);
         }
 
         public async Task EmpleadoUpdateAsync(Cliente entidad)
@@ -51,5 +51,9 @@ namespace Novusnet.Aplicacion.ServicioImpl
             return _empleadoServicio.EmpleadoGetByIdAsync(id);
         }
 
+        public Task<List<Cliente>> ListarEmpleadoRoll()
+        {
+            return _empleadoServicio.ListarEmpleadoRoll();
+        }
     }
 }

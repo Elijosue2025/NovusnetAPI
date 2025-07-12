@@ -32,6 +32,6 @@ namespace Novusnet.Aplicacion.Servicio
 
         [OperationContract]
 
-        Task<List<SServicio>> ListarServicioActivos();
+        Task<List<SServicio>> ListarServiciosConMateriales();
     }
 }

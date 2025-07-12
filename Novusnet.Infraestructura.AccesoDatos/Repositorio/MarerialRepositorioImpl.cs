@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
 {
-    public class MarerialRepositorioImpl : RepositorioImpl<Material>,IMaterialRepositorio
+    public class MarerialRepositorioImpl : RepositorioImpl<Material>, IMaterialRepositorio
     {
         private readonly NovusnetPROContext _novusnetPROContext;
 
@@ -19,7 +19,7 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
         }
 
 
-        
+
 
         public Task<List<Material>> ListarMaterialStock()
         {
