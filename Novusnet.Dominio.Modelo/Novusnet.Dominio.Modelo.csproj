@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Novusnet.Aplicacion.DTO\Novusnet.Aplicacion.DTO.csproj" />
+  </ItemGroup>
+
 </Project>

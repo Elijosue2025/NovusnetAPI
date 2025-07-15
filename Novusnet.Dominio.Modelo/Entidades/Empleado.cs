@@ -23,7 +23,7 @@ public partial class Empleado
 
     public string emp_email { get; set; }
 
-    public DateOnly? emp_fecha_registro { get; set; }
+    public DateTime? emp_fecha_registro { get; set; }
 
     public int? emp_activo { get; set; }
 
