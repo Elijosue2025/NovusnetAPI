@@ -21,6 +21,7 @@ namespace Novusnet.Aplicacion.DTO.DTOS
         public bool Activo { get; set; }
 
         // Propiedades adicionales para consultas específicas
+
         public int CantidadEmpleados { get; set; }
         public List<string> EmpleadosDelRoll { get; set; }
 

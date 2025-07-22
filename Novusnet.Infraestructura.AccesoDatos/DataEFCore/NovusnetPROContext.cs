@@ -9,7 +9,9 @@ namespace Novusnet.Infraestructura.AccesoDatos;
 public partial class NovusnetPROContext : DbContext
 {
     public NovusnetPROContext()
+
     {
+
     }
 
     public NovusnetPROContext(DbContextOptions<NovusnetPROContext> options)
@@ -29,11 +31,11 @@ public partial class NovusnetPROContext : DbContext
 
     public virtual DbSet<Orden_Trabajo> Orden_Trabajo { get; set; }
 
-    public virtual DbSet<SServicio> Servicio { get; set; }
+    public virtual DbSet<SServicio> SServicio { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+   /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=EJCF;Initial Catalog=NovusnetPRO;Integrated Security=True;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Data Source=EJCF;Initial Catalog=NovusnetPRO;Integrated Security=True;Encrypt=True");*/
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -218,7 +220,7 @@ public partial class NovusnetPROContext : DbContext
                 .HasMaxLength(45)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.fk_clienteNavigation).WithMany(p => p.Servicio)
+            entity.HasOne(d => d.fk_clienteNavigation).WithMany(p => p.SServicio)
                 .HasForeignKey(d => d.fk_cliente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Servicio__fk_cli__440B1D61");

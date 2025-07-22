@@ -13,9 +13,9 @@ public partial class Orden_Trabajo
 
     public string otra_descripcion { get; set; }
 
-    public DateOnly? otra_fecha_registro { get; set; }
+    public DateTime? otra_fecha_registro { get; set; }
 
-    public DateOnly? otra_fecha_programada { get; set; }
+    public DateTime? otra_fecha_programada { get; set; }
 
     public string otra_tiempo_estimado { get; set; }
 

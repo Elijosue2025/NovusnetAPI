@@ -44,6 +44,18 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
                 throw new Exception("Error: no se pudo eliminar datos," + ex.Message);
             }
         }
+        public async Task<IEnumerable<Empleado>> EmpleadoGetAllAsync()
+        {
+            try
+            {
+                var empleados = await _dBcontext.Empleado.ToListAsync();
+                return empleados;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al listar empleados", ex);
+            }
+        }
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {

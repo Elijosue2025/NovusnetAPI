@@ -15,19 +15,19 @@ namespace Novusnet.Aplicacion.Servicio
         Task EmpleadoAddAsync(Empleado entidad); //metdo para insertar
 
         [OperationContract]
-        Task EmpleadoUpdateAsync(Cliente entidad); //metodo para actualizar 
+        Task EmpleadoUpdateAsync(Empleado entidad); //metodo para actualizar 
 
         [OperationContract]
         Task EmpleadoDeleteAsync(int entidad);//metdo para eliminar
 
         [OperationContract]
-        Task<IEnumerable<Cliente>> EmpleadoGetAllAsync(); //metodo lista de todos los registros (select * from)
+        Task<IEnumerable<Empleado>> EmpleadoGetAllAsync(); //metodo lista de todos los registros (select * from)
 
         [OperationContract]
-        Task<Cliente> EmpleadoGetByIdAsync(int id); //metodo para buscar un registro por id (select * from where id = @id)
+        Task<Empleado> EmpleadoGetByIdAsync(int id); //metodo para buscar un registro por id (select * from where id = @id)
 
         [OperationContract]
 
-        Task<List<Cliente>> ListarEmpleadoRoll();
+        Task<List<Empleado>> ListarEmpleadoRoll();
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Novusnet.Dominio.Modelo.Abstracciones
 {
+
     public interface IClienteRepositorio : IRepositorio<Cliente>
     {
         Task<List<Cliente>> ListarClientesActivos();

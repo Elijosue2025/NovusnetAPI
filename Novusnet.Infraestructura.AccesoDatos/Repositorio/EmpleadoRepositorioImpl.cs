@@ -1,17 +1,14 @@
-﻿using Novusnet.Aplicacion.DTO.DTOS;
+﻿using Microsoft.EntityFrameworkCore;
+using Novusnet.Aplicacion.DTO.DTOS;
 using Novusnet.Dominio.Modelo.Abstracciones;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
 {
     public class EmpleadoRepositorioImpl : RepositorioImpl<Empleado>, IEmpleadoRepositorio
     {
         private readonly NovusnetPROContext _novusnetPROContext;
+        // private readonly Empleado _empleado;
+        //private IEmpleadoRepositorio _empleadoRepositorio;
 
         public EmpleadoRepositorioImpl(NovusnetPROContext dBContext) : base(dBContext)
         {
@@ -179,6 +176,49 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
             {
                 throw new Exception("Error al verificar existencia de empleado por cédula", ex);
             }
+        }
+
+        public Task EmpleadoAddAsync(Empleado entidad)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task EmpleadoDeleteAsync(int entidad)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<Empleado>> EmpleadoGetAllAsync(){
+   
+            try
+    
+            {
+                return await _novusnetPROContext.Empleado.ToListAsync();
+            }
+    
+            catch (Exception ex)
+    
+            {
+        
+                throw new Exception("Error al listar empleados", ex);
+    
+            }
+}
+
+
+        public Task<Empleado> EmpleadoGetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task EmpleadoUpdateAsync(Empleado entidad)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Empleado>> ListarEmpleadoRoll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

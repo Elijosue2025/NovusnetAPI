@@ -17,7 +17,7 @@ public partial class Orden_Material
 
     public string orma_observaciones { get; set; }
 
-    public DateOnly? orma_fecha_uso { get; set; }
+    public DateTime? orma_fecha_uso { get; set; }
 
     public int fk_material { get; set; }
 

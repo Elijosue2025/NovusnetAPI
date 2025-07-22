@@ -22,7 +22,7 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
         {
             try
             {
-                var resultado = from tmSservicio in _novusnetPROContext.Servicio
+                var resultado = from tmSservicio in _novusnetPROContext.SServicio
                                 where tmSservicio.ser_requiere_material == 1
                                 select tmSservicio;
 

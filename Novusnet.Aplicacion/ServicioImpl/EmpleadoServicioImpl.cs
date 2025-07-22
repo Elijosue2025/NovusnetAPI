@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace Novusnet.Aplicacion.ServicioImpl
 {
-    internal class EmpleadoServicioImpl : IEmpleadoServicio
+    public class 
+        EmpleadoServicioImpl : IEmpleadoServicio
     {
-        private IEmpleadoServicio _empleadoServicio;
-
+        private IEmpleadoRepositorio _empleadoRepositorio;
         private readonly NovusnetPROContext _dBContext;
 
         public EmpleadoServicioImpl(NovusnetPROContext dBContext)
         {
-            this._dBContext = dBContext;
-            _empleadoServicio = new EmpleadoServicioImpl(_dBContext);
+            _dBContext = dBContext;
+            _empleadoRepositorio = new EmpleadoRepositorioImpl(_dBContext);
 
 
         }
@@ -27,33 +27,49 @@ namespace Novusnet.Aplicacion.ServicioImpl
         public async Task EmpleadoAddAsync(Empleado entidad)
         {
 
-            await _empleadoServicio.EmpleadoAddAsync(entidad);
+            await _empleadoRepositorio.EmpleadoAddAsync(entidad);
         }
 
-        public async Task EmpleadoUpdateAsync(Cliente entidad)
-        {
-            await _empleadoServicio.EmpleadoUpdateAsync(entidad);
-
-        }
+       
 
         public async Task EmpleadoDeleteAsync(int entidad)
         {
-            await _empleadoServicio.EmpleadoDeleteAsync(entidad);
+            await _empleadoRepositorio.EmpleadoDeleteAsync(entidad);
         }
 
-        public Task<IEnumerable<Cliente>> EmpleadoGetAllAsync()
+        public Task<IEnumerable<Empleado>> EmpleadoGetAllAsync()
         {
-            return _empleadoServicio.EmpleadoGetAllAsync();
+            return _empleadoRepositorio.EmpleadoGetAllAsync();
         }
 
-        public Task<Cliente> EmpleadoGetByIdAsync(int id)
+        public Task<Empleado> EmpleadoGetByIdAsync(int id)
         {
-            return _empleadoServicio.EmpleadoGetByIdAsync(id);
+            return _empleadoRepositorio.EmpleadoGetByIdAsync(id);
         }
 
-        public Task<List<Cliente>> ListarEmpleadoRoll()
+        public Task<List<Empleado>> ListarEmpleadoRoll()
         {
-            return _empleadoServicio.ListarEmpleadoRoll();
+            return _empleadoRepositorio.ListarEmpleadoRoll();
+        }
+
+        public Task EmpleadoUpdateAsync(Empleado entidad)
+        {
+            return _empleadoRepositorio.EmpleadoUpdateAsync(entidad);
+        }
+
+        Task<IEnumerable<Empleado>> IEmpleadoServicio.EmpleadoGetAllAsync()
+        {
+            return _empleadoRepositorio.EmpleadoGetAllAsync();
+        }
+
+        Task<Empleado> IEmpleadoServicio.EmpleadoGetByIdAsync(int id)
+        {
+            return _empleadoRepositorio.EmpleadoGetByIdAsync(id);
+        }
+
+        Task<List<Empleado>> IEmpleadoServicio.ListarEmpleadoRoll()
+        {
+            return _empleadoRepositorio.ListarEmpleadoRoll();
         }
     }
 }

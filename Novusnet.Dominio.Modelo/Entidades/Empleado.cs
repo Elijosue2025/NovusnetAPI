@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Novusnet.Infraestructura.AccesoDatos;
 
@@ -27,7 +28,8 @@ public partial class Empleado
 
     public int? emp_activo { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<Logging> Logging { get; set; } = new List<Logging>();
-
+    [JsonIgnore]
     public virtual ICollection<Orden_Trabajo> Orden_Trabajo { get; set; } = new List<Orden_Trabajo>();
 }

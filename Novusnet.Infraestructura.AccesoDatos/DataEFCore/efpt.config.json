@@ -39,7 +39,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Servicio]",
+         "Name": "[dbo].[SServicio]",
          "ObjectType": 0
       }
    ],
