@@ -15,6 +15,7 @@
     <ProjectReference Include="..\Novusnet.Aplicacion\Novusnet.Aplicacion.csproj" />
     <ProjectReference Include="..\Novusnet.Dominio.Modelo\Novusnet.Dominio.Modelo.csproj" />
     <ProjectReference Include="..\Novusnet.Dominio.Servicio\Novusnet.Dominio.Servicio.csproj" />
+    <ProjectReference Include="..\Novusnet.Infraestructura.AccesoDatos\Novusnet.Infraestructura.AccesoDatos.csproj" />
   </ItemGroup>
 
 </Project>

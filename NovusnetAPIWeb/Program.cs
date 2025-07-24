@@ -26,6 +26,7 @@ internal class Program
 
         builder.Services.AddScoped<IEmpleadoServicio, EmpleadoServicioImpl>();
         builder.Services.AddScoped<IClienteServicio, ClienteServicoImpl>();
+     //   builder.Services.AddScoped<IEmpleadoServicio, EmpleadoServicioImpl>();
 
         var app = builder.Build();
 

@@ -8,11 +8,12 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
     {
         private readonly NovusnetPROContext _novusnetPROContext;
         // private readonly Empleado _empleado;
-        //private IEmpleadoRepositorio _empleadoRepositorio;
+      //  private IEmpleadoRepositorio _empleadoRepositorio;
 
-        public EmpleadoRepositorioImpl(NovusnetPROContext dBContext) : base(dBContext)
+        public  EmpleadoRepositorioImpl(NovusnetPROContext dBContext) : base(dBContext)
         {
             _novusnetPROContext = dBContext;
+
         }
 
         public async Task<List<Empleado>> ListaEmpleadosRoll()
@@ -178,17 +179,14 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
             }
         }
 
-        public Task EmpleadoAddAsync(Empleado entidad)
+        public async Task EmpleadoAddAsync(Empleado entidad)
         {
-            throw new NotImplementedException();
+            await _novusnetPROContext.Empleado.AddAsync(entidad);
+            await _novusnetPROContext.SaveChangesAsync();
         }
 
-        public Task EmpleadoDeleteAsync(int entidad)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<Empleado>> EmpleadoGetAllAsync(){
+      
+        public new async Task<List<Empleado>> EmpleadoGetAllAsync(){
    
             try
     
@@ -205,20 +203,76 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
             }
 }
 
+        public async Task<Empleado> EmpleadoGetByIdAsync(int pk_Empleado)
+        {
+            try
+            {
+                return await _novusnetPROContext.Empleado.FindAsync(pk_Empleado);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener empleado con ID {pk_Empleado}", ex);
+            }
+        }
 
-        public Task<Empleado> EmpleadoGetByIdAsync(int id)
+       
+
+        public async Task<List<Empleado>> ListarEmpleadoRoll()
+        {
+            try
+            {
+                
+                return await _novusnetPROContext.Empleado
+                    .Where(e => e.emp_roll == "Tecnico")
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al listar empleados por rol", ex);
+            }
+        }
+
+        public Task ObtenerPorIdAsync(int pk_Empleado)
         {
             throw new NotImplementedException();
         }
 
-        public Task EmpleadoUpdateAsync(Empleado entidad)
+        public Task EmpleadoDeleteAsync(int entidad)
         {
+            // return _empleadoRepositorio.EmpleadoDeleteAsync(entidad);
             throw new NotImplementedException();
+
         }
 
-        public Task<List<Empleado>> ListarEmpleadoRoll()
+        public async Task EmpleadoUpdateAsync(Empleado entidad)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var empleadoExistente = await _novusnetPROContext.Empleado.FindAsync(entidad.pk_Empleado);
+
+                if (empleadoExistente == null)
+                    throw new Exception("Empleado no encontrado.");
+
+                // Actualizar los campos
+                empleadoExistente.emp_roll = entidad.emp_roll;
+                empleadoExistente.emp_nombre = entidad.emp_nombre;
+                empleadoExistente.emp_apellido = entidad.emp_apellido;
+                empleadoExistente.emp_cedula = entidad.emp_cedula;
+                empleadoExistente.emp_direccion = entidad.emp_direccion;
+                empleadoExistente.emp_telefono = entidad.emp_telefono;
+                empleadoExistente.emp_email = entidad.emp_email;
+                empleadoExistente.emp_fecha_registro = entidad.emp_fecha_registro;
+                empleadoExistente.emp_activo = entidad.emp_activo;
+
+                await _novusnetPROContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar empleado", ex);
+            }
         }
+
+
+
     }
 }

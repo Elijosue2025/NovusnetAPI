@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Novusnet.Aplicacion.DTO\Novusnet.Aplicacion.DTO.csproj" />
     <ProjectReference Include="..\Novusnet.Dominio.Modelo\Novusnet.Dominio.Modelo.csproj" />
     <ProjectReference Include="..\Novusnet.Dominio.Servicio\Novusnet.Dominio.Servicio.csproj" />
   </ItemGroup>

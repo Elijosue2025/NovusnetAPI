@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace Novusnet.Aplicacion.DTO.DTOS
 
         public int CantidadEmpleados { get; set; }
         public List<string> EmpleadosDelRoll { get; set; }
+       
 
     }
 }

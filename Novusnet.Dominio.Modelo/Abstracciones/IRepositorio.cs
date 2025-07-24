@@ -14,5 +14,6 @@ namespace Novusnet.Dominio.Modelo.Abstracciones
         Task DeleteAsync(int entidad);//metdo para eliminar
         Task<IEnumerable<T>> GetAllAsync(); //metodo lista de todos los registros (select * from)
         Task<T> GetByIdAsync(int id); //metodo para buscar un registro por id (select * from where id = @id)
+
     }
 }

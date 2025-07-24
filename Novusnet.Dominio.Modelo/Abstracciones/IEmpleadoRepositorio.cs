@@ -17,7 +17,13 @@ namespace Novusnet.Dominio.Modelo.Abstracciones
         Task<Empleado> EmpleadoGetByIdAsync(int id);
         Task EmpleadoUpdateAsync(Empleado entidad);
         Task<List<Empleado>> ListarEmpleadoRoll();
+        Task ObtenerPorIdAsync(int pk_Empleado);
         //Task<List<Empleado>> EmpleadoGetAllAsync();
+        // Consultas adicionales útiles
+        Task<EmpleadoDTO> ObtenerEmpleadoPorCedula(string cedula);
+        Task<List<EmpleadoDTO>> EmpleadosPorEstado(bool activo);
+        Task<int> ContarEmpleadosPorRoll(string roll);
+        Task<bool> ExisteEmpleadoPorCedula(string cedula);
 
     }
 }

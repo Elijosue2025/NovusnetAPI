@@ -37,9 +37,10 @@ namespace Novusnet.Aplicacion.ServicioImpl
             await _empleadoRepositorio.EmpleadoDeleteAsync(entidad);
         }
 
-        public Task<IEnumerable<Empleado>> EmpleadoGetAllAsync()
+        public async Task<IEnumerable<Empleado>> EmpleadoGetAllAsync()
         {
-            return _empleadoRepositorio.EmpleadoGetAllAsync();
+            var empleados = await _empleadoRepositorio.EmpleadoGetAllAsync();
+            return empleados;
         }
 
         public Task<Empleado> EmpleadoGetByIdAsync(int id)
@@ -52,24 +53,10 @@ namespace Novusnet.Aplicacion.ServicioImpl
             return _empleadoRepositorio.ListarEmpleadoRoll();
         }
 
-        public Task EmpleadoUpdateAsync(Empleado entidad)
+        public async Task  EmpleadoUpdateAsync(Empleado entidad)
         {
-            return _empleadoRepositorio.EmpleadoUpdateAsync(entidad);
+            await _empleadoRepositorio.EmpleadoUpdateAsync(entidad);
         }
 
-        Task<IEnumerable<Empleado>> IEmpleadoServicio.EmpleadoGetAllAsync()
-        {
-            return _empleadoRepositorio.EmpleadoGetAllAsync();
-        }
-
-        Task<Empleado> IEmpleadoServicio.EmpleadoGetByIdAsync(int id)
-        {
-            return _empleadoRepositorio.EmpleadoGetByIdAsync(id);
-        }
-
-        Task<List<Empleado>> IEmpleadoServicio.ListarEmpleadoRoll()
-        {
-            return _empleadoRepositorio.ListarEmpleadoRoll();
-        }
     }
 }
