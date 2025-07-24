@@ -63,5 +63,15 @@ namespace Novusnet.Aplicacion.ServicioImpl
         {
             return _clienteRepositorio.ListarClientesActivos();
         }
+
+        public Task ObtenerClientePorCedula(string cedula)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ClientesPorEstado(bool activo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

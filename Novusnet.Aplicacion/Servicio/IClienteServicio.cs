@@ -34,7 +34,11 @@ namespace Novusnet.Aplicacion.Servicio
         [OperationContract]
 
         Task<List<Cliente>> ListarClientesActivos();
+        [OperationContract]
 
+        Task ObtenerClientePorCedula(string cedula);
+        [OperationContract]
 
+        Task ClientesPorEstado(bool activo);
     }
 }

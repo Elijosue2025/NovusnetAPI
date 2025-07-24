@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Novusnet.Infraestructura.AccesoDatos;
 
@@ -26,6 +27,7 @@ public partial class Cliente
     public DateTime? cli_fecha_registro { get; set; }
 
     public int? cli_activo { get; set; }
+    [JsonIgnore]
 
     public virtual ICollection<SServicio> SServicio { get; set; } = new List<SServicio>();
 }

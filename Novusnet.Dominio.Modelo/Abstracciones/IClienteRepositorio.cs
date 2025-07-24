@@ -1,4 +1,5 @@
-﻿using Novusnet.Infraestructura.AccesoDatos;
+﻿using Novusnet.Aplicacion.DTO.DTOS;
+using Novusnet.Infraestructura.AccesoDatos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,17 @@ namespace Novusnet.Dominio.Modelo.Abstracciones
     public interface IClienteRepositorio : IRepositorio<Cliente>
     {
         Task<List<Cliente>> ListarClientesActivos();
+        Task ClienteAddAsync(Cliente entidad);
+        Task ClienteDeleteAsync(int entidad);
+        Task<IEnumerable<Cliente>> ClienteGetAllAsync();
+        Task<Cliente> ClienteGetByIdAsync(int id);
+        Task ClienteUpdateAsync(Cliente entidad);
+       
+        //Task<List<Empleado>> EmpleadoGetAllAsync();
+        // Consultas adicionales útiles
+        Task<ClienteDTO> ObtenerClientePorCedula(string cedula);
+        Task<List<ClienteDTO>> ClientesPorEstado(bool activo);
+       
 
     }
 }
