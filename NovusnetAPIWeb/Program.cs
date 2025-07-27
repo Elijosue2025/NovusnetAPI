@@ -13,6 +13,7 @@ internal class Program
         // Add services to the container.
 
         builder.Services.AddControllers();
+
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
@@ -26,7 +27,8 @@ internal class Program
 
         builder.Services.AddScoped<IEmpleadoServicio, EmpleadoServicioImpl>();
         builder.Services.AddScoped<IClienteServicio, ClienteServicoImpl>();
-     //   builder.Services.AddScoped<IEmpleadoServicio, EmpleadoServicioImpl>();
+
+        //   builder.Services.AddScoped<IEmpleadoServicio, EmpleadoServicioImpl>();
 
         var app = builder.Build();
 
