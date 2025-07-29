@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Novusnet.Infraestructura.AccesoDatos;
 
@@ -14,6 +15,6 @@ public partial class Logging
     public string log_password { get; set; }
 
     public int fk_Empleado { get; set; }
-
+    [JsonIgnore]
     public virtual Empleado fk_EmpleadoNavigation { get; set; }
 }

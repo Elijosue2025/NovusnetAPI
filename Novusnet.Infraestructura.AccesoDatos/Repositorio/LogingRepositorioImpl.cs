@@ -80,14 +80,20 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
             }
         }
 
-
-      
-
-        
+       
 
         public async Task<Logging> ObtenerPorIdAsync(int id)
         {
-            return await _novusnetPROContext.Logging.FindAsync(id);
+            try
+            {
+                return await _novusnetPROContext.Logging.FindAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al crear nuevo registro de logging", ex);
+            }
+
+
         }
 
 
@@ -104,6 +110,12 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
                 throw new Exception("Error al listar registros de logging", ex);
             }
         }
+        public async Task<bool> ValidarLoginAsync(string usuario, string password)
+        {
+            return await _novusnetPROContext.Logging
+                .AnyAsync(l => l.log_user == usuario && l.log_password == password);
+        }
+
 
     }
 }

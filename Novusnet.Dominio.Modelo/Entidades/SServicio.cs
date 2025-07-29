@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Novusnet.Infraestructura.AccesoDatos;
 
@@ -20,8 +21,10 @@ public partial class SServicio
     public string ser_tipo_factura { get; set; }
 
     public int fk_cliente { get; set; }
+    [JsonIgnore]
 
     public virtual ICollection<Orden_Trabajo> Orden_Trabajo { get; set; } = new List<Orden_Trabajo>();
+    [JsonIgnore]
 
     public virtual Cliente fk_clienteNavigation { get; set; }
 }

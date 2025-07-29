@@ -5,7 +5,7 @@ using Novusnet.Infraestructura.AccesoDatos;
 namespace NovusnetAPIWeb.Controllers
 {
     [ApiController]
-    [Route("/")]
+    [Route("api/[controller]")]
     public class ClientesController : ControllerBase
     {
         private readonly IClienteServicio _clienteServicio;

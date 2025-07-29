@@ -122,9 +122,11 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
                 }).ToListAsync();
         }
 
-        Task IClienteRepositorio.ClienteAddAsync(Cliente entidad)
+        async Task IClienteRepositorio.ClienteAddAsync(Cliente entidad)
         {
-            throw new NotImplementedException();
+            await _novusnetPROContext.Cliente.AddAsync(entidad);
+           await _novusnetPROContext.SaveChangesAsync();
+           // await _novusnetPROContext.ClienteAddAsync();
         }
 
         Task IClienteRepositorio.ClienteDeleteAsync(int entidad)

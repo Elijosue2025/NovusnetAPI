@@ -48,15 +48,24 @@ namespace Novusnet.Aplicacion.ServicioImpl
             return _empleadoRepositorio.EmpleadoGetByIdAsync(id);
         }
 
-        public Task<List<Empleado>> ListarEmpleadoRoll()
-        {
-            return _empleadoRepositorio.ListarEmpleadoRoll();
-        }
+        
 
         public async Task  EmpleadoUpdateAsync(Empleado entidad)
         {
             await _empleadoRepositorio.EmpleadoUpdateAsync(entidad);
         }
 
+      
+
+        public async Task<bool> CambiarEstadoEmpleado(int pk_Empleado, bool nuevoEstado)
+        {
+            return await _empleadoRepositorio.CambiarEstadoEmpleado(pk_Empleado, nuevoEstado);
+        }
+
+        Task<List<Empleado>> IEmpleadoServicio.BuscarEmpleadosPorCriterio(string criterio, string busqueda)
+        {
+            return _empleadoRepositorio.BuscarEmpleadosPorCriterio(criterio, busqueda);
+        }
+        
     }
 }

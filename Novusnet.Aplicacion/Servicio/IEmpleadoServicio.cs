@@ -26,8 +26,12 @@ namespace Novusnet.Aplicacion.Servicio
         [OperationContract]
         Task<Empleado> EmpleadoGetByIdAsync(int id); //metodo para buscar un registro por id (select * from where id = @id)
 
+             
         [OperationContract]
 
-        Task<List<Empleado>> ListarEmpleadoRoll();
+        Task<bool> CambiarEstadoEmpleado(int pk_Empleado, bool nuevoEstado);
+        [OperationContract]
+
+        Task<List<Empleado>> BuscarEmpleadosPorCriterio(string criterio, string busqueda);
     }
 }

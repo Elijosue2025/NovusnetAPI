@@ -7,201 +7,37 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
     public class EmpleadoRepositorioImpl : RepositorioImpl<Empleado>, IEmpleadoRepositorio
     {
         private readonly NovusnetPROContext _novusnetPROContext;
-        // private readonly Empleado _empleado;
-      //  private IEmpleadoRepositorio _empleadoRepositorio;
 
-        public  EmpleadoRepositorioImpl(NovusnetPROContext dBContext) : base(dBContext)
+        public EmpleadoRepositorioImpl(NovusnetPROContext dBContext) : base(dBContext)
         {
             _novusnetPROContext = dBContext;
-
         }
 
-        public async Task<List<Empleado>> ListaEmpleadosRoll()
-        {
-            try
-            {
-                var resultado = (from tmEmpleado in _novusnetPROContext.Empleado
-                                 where tmEmpleado.emp_roll == "Tecnico"
-                                 select tmEmpleado);
-
-                return await resultado.ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al listar empleados con rol técnico", ex);
-            }
-        }
-
-        // 2. Buscar empleados por roll específico
-        public async Task<List<EmpleadoDTO>> BuscarEmpleadosPorRoll(string roll)
-        {
-            try
-            {
-                var resultados = await (from e in _novusnetPROContext.Empleado
-                                        where e.emp_roll.Contains(roll) && e.emp_activo == 1
-                                        orderby e.emp_nombre
-                                        select new EmpleadoDTO
-                                        {
-                                            IdEmpleado = e.pk_Empleado,
-                                            NombreCompleto = e.emp_nombre + " " + e.emp_apellido,
-                                            Roll = e.emp_roll,
-                                            FechaRegistro = e.emp_fecha_registro,
-                                            Direccion = e.emp_direccion
-                                        }).ToListAsync();
-                return resultados;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        // 3. Obtener empleados registrados en un rango de fechas
-        public async Task<List<EmpleadoDTO>> EmpleadosRegistradosEnRango(DateTime fechaInicio, DateTime fechaFin)
-        {
-            try
-            {
-                var resultados = await (from e in _novusnetPROContext.Empleado
-                                        where e.emp_fecha_registro >= fechaInicio &&
-                                              e.emp_fecha_registro <= fechaFin
-                                        group e by e.emp_roll into grupo
-                                        select new EmpleadoDTO
-                                        {
-                                            Roll = grupo.Key,
-                                            CantidadEmpleados = grupo.Count(),
-                                            EmpleadosDelRoll = grupo.Select(emp => emp.emp_nombre + " " + emp.emp_apellido).ToList()
-                                        }).ToListAsync();
-                return resultados;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public async Task<List<EmpleadoDTO>> ListarEmpleadosActivos()
-        {
-            try
-            {
-                var resultados = await (from e in _novusnetPROContext.Empleado
-                                        where e.emp_activo == 1
-                                        orderby e.emp_nombre
-                                        select new EmpleadoDTO
-                                        {
-                                            IdEmpleado = e.pk_Empleado,
-                                            NombreCompleto = e.emp_nombre + " " + e.emp_apellido,
-                                            Roll = e.emp_roll,
-                                            FechaRegistro = e.emp_fecha_registro,
-                                            Direccion = e.emp_direccion
-                                        }).ToListAsync();
-                return resultados;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al listar empleados activos", ex);
-            }
-        }
-
-        public async Task<EmpleadoDTO> ObtenerEmpleadoPorCedula(string cedula)
-        {
-            try
-            {
-                var resultado = await (from e in _novusnetPROContext.Empleado
-                                       where e.emp_cedula == cedula
-                                       select new EmpleadoDTO
-                                       {
-                                           IdEmpleado = e.pk_Empleado,
-                                           NombreCompleto = e.emp_nombre + " " + e.emp_apellido,
-                                           Roll = e.emp_roll,
-                                           FechaRegistro = e.emp_fecha_registro,
-                                           Direccion = e.emp_direccion,
-                                           Cedula = e.emp_cedula
-                                       }).FirstOrDefaultAsync();
-                return resultado;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al obtener empleado por cédula", ex);
-            }
-        }
-
-        public async Task<List<EmpleadoDTO>> EmpleadosPorEstado(bool activo)
-        {
-            try
-            {
-                int estadoInt = activo ? 1 : 0;
-                var resultados = await (from e in _novusnetPROContext.Empleado
-                                        where e.emp_activo == estadoInt
-                                        orderby e.emp_nombre
-                                        select new EmpleadoDTO
-                                        {
-                                            IdEmpleado = e.pk_Empleado,
-                                            NombreCompleto = e.emp_nombre + " " + e.emp_apellido,
-                                            Roll = e.emp_roll,
-                                            FechaRegistro = e.emp_fecha_registro,
-                                            Direccion = e.emp_direccion
-                                        }).ToListAsync();
-                return resultados;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al obtener empleados por estado", ex);
-            }
-        }
-
-        public async Task<int> ContarEmpleadosPorRoll(string roll)
-        {
-            try
-            {
-                var count = await (from e in _novusnetPROContext.Empleado
-                                   where e.emp_roll == roll
-                                   select e).CountAsync();
-                return count;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al contar empleados por roll", ex);
-            }
-        }
-
-        public async Task<bool> ExisteEmpleadoPorCedula(string cedula)
-        {
-            try
-            {
-                var existe = await (from e in _novusnetPROContext.Empleado
-                                    where e.emp_cedula == cedula
-                                    select e).AnyAsync();
-                return existe;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al verificar existencia de empleado por cédula", ex);
-            }
-        }
-
+        // MÉTODOS CRUD BÁSICOS
         public async Task EmpleadoAddAsync(Empleado entidad)
         {
-            await _novusnetPROContext.Empleado.AddAsync(entidad);
-            await _novusnetPROContext.SaveChangesAsync();
+            try
+            {
+                await _novusnetPROContext.Empleado.AddAsync(entidad);
+                await _novusnetPROContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al crear empleado", ex);
+            }
         }
 
-      
-        public new async Task<List<Empleado>> EmpleadoGetAllAsync(){
-   
+        public new async Task<List<Empleado>> EmpleadoGetAllAsync()
+        {
             try
-    
             {
                 return await _novusnetPROContext.Empleado.ToListAsync();
             }
-    
             catch (Exception ex)
-    
             {
-        
                 throw new Exception("Error al listar empleados", ex);
-    
             }
-}
+        }
 
         public async Task<Empleado> EmpleadoGetByIdAsync(int pk_Empleado)
         {
@@ -213,35 +49,6 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
             {
                 throw new Exception($"Error al obtener empleado con ID {pk_Empleado}", ex);
             }
-        }
-
-       
-
-        public async Task<List<Empleado>> ListarEmpleadoRoll()
-        {
-            try
-            {
-                
-                return await _novusnetPROContext.Empleado
-                    .Where(e => e.emp_roll == "Tecnico")
-                    .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al listar empleados por rol", ex);
-            }
-        }
-
-        public Task ObtenerPorIdAsync(int pk_Empleado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task EmpleadoDeleteAsync(int entidad)
-        {
-            // return _empleadoRepositorio.EmpleadoDeleteAsync(entidad);
-            throw new NotImplementedException();
-
         }
 
         public async Task EmpleadoUpdateAsync(Empleado entidad)
@@ -272,7 +79,154 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
             }
         }
 
+        public async Task EmpleadoDeleteAsync(int pk_Empleado)
+        {
+            try
+            {
+                var empleado = await _novusnetPROContext.Empleado.FindAsync(pk_Empleado);
+                if (empleado != null)
+                {
+                    _novusnetPROContext.Empleado.Remove(empleado);
+                    await _novusnetPROContext.SaveChangesAsync();
+                }
+                else
+                {
+                    throw new Exception("Empleado no encontrado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al eliminar empleado", ex);
+            }
+        }
 
 
+
+        public async Task<List<Empleado>> BuscarEmpleadosPorCriterio(string criterio, string busqueda)
+        {
+            try
+            {
+                List<Empleado> listaEmpleados = new List<Empleado>();
+
+                // Convertir criterio a minúsculas para hacer la comparación case-insensitive
+                string criterioLower = criterio?.ToLower(); // Aquí estaba el error de sintaxis
+
+                switch (criterioLower)
+                {
+                    case "nombre":
+                    case "nombreempleado":
+                        listaEmpleados = await _novusnetPROContext.Empleado
+                            .Where(e => e.emp_nombre != null && e.emp_nombre.Contains(busqueda))
+                            .ToListAsync();
+                        break;
+
+                    case "apellido":
+                    case "apellidoempleado":
+                        listaEmpleados = await _novusnetPROContext.Empleado
+                            .Where(e => e.emp_apellido != null && e.emp_apellido.Contains(busqueda))
+                            .ToListAsync();
+                        break;
+
+                    case "cedula":
+                    case "empleadocedula":
+                        listaEmpleados = await _novusnetPROContext.Empleado
+                            .Where(e => e.emp_cedula != null && e.emp_cedula.Contains(busqueda))
+                            .ToListAsync();
+                        break;
+
+                    case "direccion":
+                        listaEmpleados = await _novusnetPROContext.Empleado
+                            .Where(e => e.emp_direccion.Contains(busqueda))
+                            .ToListAsync();
+                        break;
+
+                    case "telefono":
+                        listaEmpleados = await _novusnetPROContext.Empleado
+                            .Where(e => e.emp_telefono.Contains(busqueda))
+                            .ToListAsync();
+                        break;
+
+                    case "email":
+                    case "correo":
+                        listaEmpleados = await _novusnetPROContext.Empleado
+                            .Where(e => e.emp_email.Contains(busqueda))
+                            .ToListAsync();
+                        break;
+
+                    case "roll":
+                    case "rol":
+                        listaEmpleados = await _novusnetPROContext.Empleado
+                            .Where(e => e.emp_roll.Contains(busqueda))
+                            .ToListAsync();
+                        break;
+
+                    case "id":
+                    case "empleadoid":
+                    case "pkempleado":
+                        // Para búsqueda por ID, intentar convertir la búsqueda a entero
+                        if (int.TryParse(busqueda, out int empleadoId))
+                        {
+                            listaEmpleados = await _novusnetPROContext.Empleado
+                                .Where(e => e.pk_Empleado == empleadoId)
+                                .ToListAsync();
+                        }
+                        break;
+
+                    case "activo":
+                        // Para búsqueda por estado activo (0 o 1)
+                        if (int.TryParse(busqueda, out int estadoActivo))
+                        {
+                            listaEmpleados = await _novusnetPROContext.Empleado
+                                .Where(e => e.emp_activo == estadoActivo)
+                                .ToListAsync();
+                        }
+                        break;
+
+                    default:
+                        // Si no se especifica criterio válido, devolver todos los empleados activos
+                        listaEmpleados = await _novusnetPROContext.Empleado
+                            .Where(e => e.emp_activo == 1)
+                            .ToListAsync();
+                        break;
+                }
+
+                return listaEmpleados;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener empleados por parámetro: " + ex.Message, ex);
+            }
+        }
+
+        public async Task<bool> CambiarEstadoEmpleado(int pk_Empleado, bool nuevoEstado)
+        {
+            try
+            {
+                var empleado = await _novusnetPROContext.Empleado.FindAsync(pk_Empleado);
+                if (empleado != null)
+                {
+                    empleado.emp_activo = nuevoEstado =="0";
+                    await _novusnetPROContext.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cambiar estado del empleado", ex);
+            }
+        }
+
+
+        
+
+        // MÉTODO OBSOLETO - MANTENER POR COMPATIBILIDAD
+        public Task ObtenerPorIdAsync(int pk_Empleado)
+        {
+            // Este método se mantiene para compatibilidad pero se recomienda usar EmpleadoGetByIdAsync
+            return Task.FromResult(EmpleadoGetByIdAsync(pk_Empleado));
+        }
+
+     
     }
 }
