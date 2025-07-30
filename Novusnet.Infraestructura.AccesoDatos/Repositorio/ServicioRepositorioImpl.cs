@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Novusnet.Aplicacion.DTO.DTOS;
 using Novusnet.Dominio.Modelo.Abstracciones;
 using System;
 using System.Collections.Generic;
@@ -31,19 +32,7 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
             }
         }
 
-        public new async Task<List<SServicio>> ServicioGetAllAsync()
-        {
-            try
-            {
-                return await _novusnetPROContext.SServicio
-                    .Include(s => s.fk_clienteNavigation)
-                    .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al listar servicios", ex);
-            }
-        }
+    
 
         public async Task<SServicio> ServicioGetByIdAsync(int pk_servicio)
         {
@@ -89,298 +78,126 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
             try
             {
                 var servicio = await _novusnetPROContext.SServicio.FindAsync(pk_servicio);
-                if (servicio != null)
-                {
-                    _novusnetPROContext.SServicio.Remove(servicio);
-                    await _novusnetPROContext.SaveChangesAsync();
-                }
-                else
-                {
-                    throw new Exception("Servicio no encontrado.");
-                }
+                if (servicio == null)
+                    throw new Exception("Servicio no encontrado");
+
+                servicio.ser_tipo_factura = "Cancelado";
+
+                _novusnetPROContext.SServicio.Update(servicio);
+                await _novusnetPROContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al eliminar servicio", ex);
+                throw new Exception("Error al cancelar servicio", ex);
             }
         }
 
-        // MÉTODO DE BÚSQUEDA POR CRITERIOS
-        public async Task<List<SServicio>> BuscarServiciosPorCriterio(string criterio, string busqueda)
+
+        public async Task<List<SServicoDTO>> BuscarServiciosPorCriterioDTO(string criterio, string busqueda)
         {
             try
             {
-                List<SServicio> listaServicios = new List<SServicio>();
+                var query = _novusnetPROContext.SServicio
+                    .Include(s => s.fk_clienteNavigation)
+                    .AsQueryable();
 
-                // Convertir criterio a minúsculas para hacer la comparación case-insensitive
                 string criterioLower = criterio?.ToLower();
 
                 switch (criterioLower)
                 {
                     case "nombre":
                     case "nombreservicio":
-                        listaServicios = await _novusnetPROContext.SServicio
-                            .Include(s => s.fk_clienteNavigation)
-                            .Where(s => s.ser_nombre != null && s.ser_nombre.Contains(busqueda))
-                            .ToListAsync();
+                        query = query.Where(s => s.ser_nombre.Contains(busqueda));
                         break;
 
                     case "descripcion":
-                        listaServicios = await _novusnetPROContext.SServicio
-                            .Include(s => s.fk_clienteNavigation)
-                            .Where(s => s.ser_descripcion != null && s.ser_descripcion.Contains(busqueda))
-                            .ToListAsync();
+                        query = query.Where(s => s.ser_descripcion.Contains(busqueda));
                         break;
 
                     case "precio":
-                        // Para búsqueda por precio, intentar convertir la búsqueda a decimal
                         if (decimal.TryParse(busqueda, out decimal precio))
                         {
-                            listaServicios = await _novusnetPROContext.SServicio
-                                .Include(s => s.fk_clienteNavigation)
-                                .Where(s => s.ser_precio == precio)
-                                .ToListAsync();
+                            query = query.Where(s => s.ser_precio == precio);
                         }
                         break;
 
                     case "tipofactura":
                     case "factura":
-                        listaServicios = await _novusnetPROContext.SServicio
-                            .Include(s => s.fk_clienteNavigation)
-                            .Where(s => s.ser_tipo_factura != null && s.ser_tipo_factura.Contains(busqueda))
-                            .ToListAsync();
+                        query = query.Where(s => s.ser_tipo_factura.Contains(busqueda));
                         break;
 
                     case "cliente":
                     case "fkcliente":
                         if (int.TryParse(busqueda, out int clienteId))
                         {
-                            listaServicios = await _novusnetPROContext.SServicio
-                                .Include(s => s.fk_clienteNavigation)
-                                .Where(s => s.fk_cliente == clienteId)
-                                .ToListAsync();
+                            query = query.Where(s => s.fk_cliente == clienteId);
                         }
                         break;
 
                     case "nombrecliente":
                     case "clientenombre":
-                        listaServicios = await _novusnetPROContext.SServicio
-                            .Include(s => s.fk_clienteNavigation)
-                            .Where(s => s.fk_clienteNavigation != null &&
-                                   s.fk_clienteNavigation.cli_nombre.Contains(busqueda))
-                            .ToListAsync();
+                        query = query.Where(s => s.fk_clienteNavigation.cli_nombre.Contains(busqueda));
                         break;
 
                     case "apellidocliente":
                     case "clienteapellido":
-                        listaServicios = await _novusnetPROContext.SServicio
-                            .Include(s => s.fk_clienteNavigation)
-                            .Where(s => s.fk_clienteNavigation != null &&
-                                   s.fk_clienteNavigation.cli_apellido.Contains(busqueda))
-                            .ToListAsync();
+                        query = query.Where(s => s.fk_clienteNavigation.cli_apellido.Contains(busqueda));
                         break;
 
                     case "cedulacliente":
                     case "clientecedula":
-                        listaServicios = await _novusnetPROContext.SServicio
-                            .Include(s => s.fk_clienteNavigation)
-                            .Where(s => s.fk_clienteNavigation != null &&
-                                   s.fk_clienteNavigation.cli_cedula.Contains(busqueda))
-                            .ToListAsync();
+                        query = query.Where(s => s.fk_clienteNavigation.cli_cedula.Contains(busqueda));
                         break;
 
                     case "requierematerial":
                     case "material":
                         if (int.TryParse(busqueda, out int requiereMaterial))
                         {
-                            listaServicios = await _novusnetPROContext.SServicio
-                                .Include(s => s.fk_clienteNavigation)
-                                .Where(s => s.ser_requiere_material == requiereMaterial)
-                                .ToListAsync();
+                            query = query.Where(s => s.ser_requiere_material == requiereMaterial);
                         }
                         break;
 
                     case "id":
                     case "servicioid":
                     case "pkservicio":
-                        // Para búsqueda por ID, intentar convertir la búsqueda a entero
                         if (int.TryParse(busqueda, out int servicioId))
                         {
-                            listaServicios = await _novusnetPROContext.SServicio
-                                .Include(s => s.fk_clienteNavigation)
-                                .Where(s => s.pk_servicio == servicioId)
-                                .ToListAsync();
+                            query = query.Where(s => s.pk_servicio == servicioId);
                         }
                         break;
-
-                    default:
-                        // Si no se especifica criterio válido, devolver todos los servicios
-                        listaServicios = await _novusnetPROContext.SServicio
-                            .Include(s => s.fk_clienteNavigation)
-                            .ToListAsync();
-                        break;
                 }
 
-                return listaServicios;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al obtener servicios por parámetro: " + ex.Message, ex);
-            }
-        }
+                var lista = await query.ToListAsync();
 
-        // MÉTODOS ESPECÍFICOS PARA SERVICIO
-        public async Task<List<SServicio>> ListarServiciosConMateriales()
-        {
-            try
-            {
-                var resultado = from tmSservicio in _novusnetPROContext.SServicio
-                                where tmSservicio.ser_requiere_material == 1
-                                select tmSservicio;
-                return await resultado.Include(s => s.fk_clienteNavigation).ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al listar servicios que requieren materiales: " + ex.Message, ex);
-            }
-        }
-
-        public async Task<List<SServicio>> ListarServiciosSinMateriales()
-        {
-            try
-            {
-                return await _novusnetPROContext.SServicio
-                    .Include(s => s.fk_clienteNavigation)
-                    .Where(s => s.ser_requiere_material == 0 || s.ser_requiere_material == null)
-                    .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al listar servicios que no requieren materiales", ex);
-            }
-        }
-
-        public async Task<List<SServicio>> ListarServiciosPorCliente(int fk_cliente)
-        {
-            try
-            {
-                return await _novusnetPROContext.SServicio
-                    .Include(s => s.fk_clienteNavigation)
-                    .Where(s => s.fk_cliente == fk_cliente)
-                    .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error al listar servicios del cliente {fk_cliente}", ex);
-            }
-        }
-
-        public async Task<List<SServicio>> ListarServiciosPorTipoFactura(string tipoFactura)
-        {
-            try
-            {
-                return await _novusnetPROContext.SServicio
-                    .Include(s => s.fk_clienteNavigation)
-                    .Where(s => s.ser_tipo_factura != null && s.ser_tipo_factura.Equals(tipoFactura))
-                    .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error al listar servicios por tipo de factura {tipoFactura}", ex);
-            }
-        }
-
-        public async Task<bool> CambiarRequiereMaterial(int pk_servicio, bool requiereMaterial)
-        {
-            try
-            {
-                var servicio = await _novusnetPROContext.SServicio.FindAsync(pk_servicio);
-                if (servicio != null)
+                return lista.Select(s => new SServicoDTO
                 {
-                    servicio.ser_requiere_material = requiereMaterial ? 1 : 0;
-                    await _novusnetPROContext.SaveChangesAsync();
-                    return true;
-                }
-                return false;
+                    pk_servicio = s.pk_servicio,
+                    ser_nombre = s.ser_nombre,
+                    ser_precio = s.ser_precio,
+                    ser_descripcion = s.ser_descripcion,
+                    ser_requiere_material = s.ser_requiere_material,
+                    ser_tipo_factura = s.ser_tipo_factura,
+                    fk_cliente = s.fk_cliente,
+
+                    ClienteId = s.fk_clienteNavigation.pk_cliente,
+                    CedulaCliente = s.fk_clienteNavigation.cli_cedula,
+                    NombreCliente = s.fk_clienteNavigation.cli_nombre,
+                    ApellidoCliente = s.fk_clienteNavigation.cli_apellido,
+                    TelefonoCliente = s.fk_clienteNavigation.cli_telefono
+
+                }).ToList();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cambiar el estado de requiere material del servicio", ex);
+                throw new Exception("Error al buscar servicios con datos de cliente", ex);
             }
         }
 
-        // NUEVOS MÉTODOS PARA CONSULTAR CLIENTES QUE TIENEN SERVICIOS
-        public async Task<List<Cliente>> ListarClientesConServicios()
-        {
-            try
-            {
-                return await _novusnetPROContext.Cliente
-                    .Include(c => c.SServicio)
-                    .Where(c => c.SServicio.Any())
-                    .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al listar clientes con servicios", ex);
-            }
-        }
 
-        public async Task<List<Cliente>> ListarClientesSinServicios()
-        {
-            try
-            {
-                return await _novusnetPROContext.Cliente
-                    .Include(c => c.SServicio)
-                    .Where(c => !c.SServicio.Any())
-                    .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al listar clientes sin servicios", ex);
-            }
-        }
+        
 
-        public async Task<Cliente> ObtenerClienteConServicios(int pk_cliente)
-        {
-            try
-            {
-                return await _novusnetPROContext.Cliente
-                    .Include(c => c.SServicio)
-                    .FirstOrDefaultAsync(c => c.pk_cliente == pk_cliente);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error al obtener cliente con ID {pk_cliente} y sus servicios", ex);
-            }
-        }
 
-        public async Task<int> ContarServiciosPorCliente(int pk_cliente)
-        {
-            try
-            {
-                return await _novusnetPROContext.SServicio
-                    .CountAsync(s => s.fk_cliente == pk_cliente);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error al contar servicios del cliente {pk_cliente}", ex);
-            }
-        }
-
-        public async Task<List<Cliente>> BuscarClientesPorNombreConServicios(string nombre)
-        {
-            try
-            {
-                return await _novusnetPROContext.Cliente
-                    .Include(c => c.SServicio)
-                    .Where(c => c.cli_nombre.Contains(nombre) && c.SServicio.Any())
-                    .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error al buscar clientes por nombre '{nombre}' con servicios", ex);
-            }
-        }
+       
 
         public async Task<List<SServicio>> ListarServiciosConDetallesCliente()
         {
@@ -419,28 +236,39 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
             }
         }
 
-        public async Task<Dictionary<Cliente, List<SServicio>>> ObtenerClientesConSusServicios()
+      
+
+
+        public async Task<List<SServicoDTO>> ObtenerServiciosConDatosClienteAsync()
         {
             try
             {
-                var clientesConServicios = await _novusnetPROContext.Cliente
-                    .Include(c => c.SServicio)
-                    .Where(c => c.SServicio.Any())
-                    .ToDictionaryAsync(c => c, c => c.SServicio.ToList());
+                return await _novusnetPROContext.SServicio
+                    .Include(s => s.fk_clienteNavigation)
+                    .Select(s => new SServicoDTO
+                    {
+                        pk_servicio = s.pk_servicio,
+                        ser_nombre = s.ser_nombre,
+                        ser_precio = s.ser_precio,
+                        ser_descripcion = s.ser_descripcion,
+                        ser_requiere_material = s.ser_requiere_material,
+                        ser_tipo_factura = s.ser_tipo_factura,
+                        fk_cliente = s.fk_cliente,
 
-                return clientesConServicios;
+                        // Datos del cliente
+                        ClienteId = s.fk_clienteNavigation.pk_cliente,
+                        CedulaCliente = s.fk_clienteNavigation.cli_cedula,
+                        NombreCliente = s.fk_clienteNavigation.cli_nombre,
+                        ApellidoCliente = s.fk_clienteNavigation.cli_apellido,
+                        TelefonoCliente = s.fk_clienteNavigation.cli_telefono
+                    })
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al obtener diccionario de clientes con sus servicios", ex);
+                throw new Exception("Error al obtener servicios con datos de cliente", ex);
             }
         }
 
-        // MÉTODO OBSOLETO - MANTENER POR COMPATIBILIDAD
-        public Task ObtenerPorIdAsync(int pk_servicio)
-        {
-            // Este método se mantiene para compatibilidad pero se recomienda usar ServicioGetByIdAsync
-            return Task.FromResult(ServicioGetByIdAsync(pk_servicio));
-        }
     }
 }

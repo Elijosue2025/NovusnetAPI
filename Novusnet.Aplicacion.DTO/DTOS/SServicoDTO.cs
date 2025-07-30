@@ -21,5 +21,12 @@ namespace Novusnet.Aplicacion.DTO.DTOS
         public string ser_tipo_factura { get; set; }
 
         public int fk_cliente { get; set; }
+
+        public int ClienteId { get; set; }
+        public string CedulaCliente { get; set; }
+        public string NombreCliente { get; set; }
+        public string ApellidoCliente { get; set; }
+        public string TelefonoCliente { get; set; }
+
     }
 }

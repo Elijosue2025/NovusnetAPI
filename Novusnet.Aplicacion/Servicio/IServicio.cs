@@ -1,20 +1,17 @@
-﻿using Novusnet.Dominio.Modelo.Abstracciones;
+﻿using Novusnet.Aplicacion.DTO.DTOS;
+using Novusnet.Dominio.Modelo.Abstracciones;
 using Novusnet.Infraestructura.AccesoDatos;
-using Novusnet.Infraestructura.AccesoDatos.Repositorio;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Novusnet.Aplicacion.Servicio
 {
     [ServiceContract]
     public interface IServicio
-
     {
-        // Métodos CRUD básicos
+        // MÉTODOS CRUD BÁSICOS
         [OperationContract]
         Task ServicioAddAsync(SServicio entidad);
 
@@ -22,33 +19,20 @@ namespace Novusnet.Aplicacion.Servicio
         Task ServicioUpdateAsync(SServicio entidad);
 
         [OperationContract]
-        Task ServicioDeleteAsync(int entidad);
+        Task ServicioDeleteAsync(int pk_servicio);
 
         [OperationContract]
-        Task<IEnumerable<SServicio>> ServicioGetAllAsync();
+        Task<SServicio> ServicioGetByIdAsync(int pk_servicio);
+
+        // MÉTODOS PARA OBTENER SERVICIOS CON DATOS DE CLIENTE
+        [OperationContract]
+        Task<List<SServicoDTO>> ObtenerServiciosConDatosClienteAsync();
 
         [OperationContract]
-        Task<SServicio> ServicioGetByIdAsync(int id);
+        Task<List<SServicio>> ListarServiciosConDetallesCliente();
 
-        // Métodos de búsqueda
+        // MÉTODO DE BÚSQUEDA AVANZADA
         [OperationContract]
-        Task<List<SServicio>> BuscarServiciosPorCriterio(string criterio, string busqueda);
-
-        // Métodos específicos de negocio
-        [OperationContract]
-        Task<List<SServicio>> ListarServiciosConMateriales();
-
-        [OperationContract]
-        Task<List<SServicio>> ListarServiciosSinMateriales();
-
-        [OperationContract]
-        Task<List<SServicio>> ListarServiciosPorCliente(int fk_cliente);
-
-        [OperationContract]
-        Task<List<SServicio>> ListarServiciosPorTipoFactura(string tipoFactura);
-
-        [OperationContract]
-        Task<bool> CambiarRequiereMaterial(int pk_servicio, bool requiereMaterial);
-
+        Task<List<SServicoDTO>> BuscarServiciosPorCriterioDTO(string criterio, string busqueda);
     }
 }

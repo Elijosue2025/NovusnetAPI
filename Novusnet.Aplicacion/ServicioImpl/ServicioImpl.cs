@@ -1,4 +1,5 @@
-﻿using Novusnet.Aplicacion.Servicio;
+﻿using Novusnet.Aplicacion.DTO.DTOS;
+using Novusnet.Aplicacion.Servicio;
 using Novusnet.Dominio.Modelo.Abstracciones;
 using Novusnet.Infraestructura.AccesoDatos;
 using Novusnet.Infraestructura.AccesoDatos.Repositorio;
@@ -25,55 +26,36 @@ namespace Novusnet.Aplicacion.ServicioImpl
             await _servicioRepositorio.ServicioAddAsync(entidad);
         }
 
-        public async Task ServicioDeleteAsync(int entidad)
-        {
-            await _servicioRepositorio.ServicioDeleteAsync(entidad);
-        }
-
-        public async Task<IEnumerable<SServicio>> ServicioGetAllAsync()
-        {
-            return await _servicioRepositorio.ServicioGetAllAsync();
-        }
-
-        public Task<SServicio> ServicioGetByIdAsync(int id)
-        {
-            return _servicioRepositorio.ServicioGetByIdAsync(id);
-        }
-
         public async Task ServicioUpdateAsync(SServicio entidad)
         {
             await _servicioRepositorio.ServicioUpdateAsync(entidad);
         }
 
-        // MÉTODOS ESPECÍFICOS DE NEGOCIO
-        public Task<List<SServicio>> ListarServiciosConMateriales()
+        public async Task ServicioDeleteAsync(int pk_servicio)
         {
-            return _servicioRepositorio.ListarServiciosConMateriales();
+            await _servicioRepositorio.ServicioDeleteAsync(pk_servicio);
         }
 
-        public Task<List<SServicio>> BuscarServiciosPorCriterio(string criterio, string busqueda)
+        public async Task<SServicio> ServicioGetByIdAsync(int pk_servicio)
         {
-            return _servicioRepositorio.BuscarServiciosPorCriterio(criterio, busqueda);
+            return await _servicioRepositorio.ServicioGetByIdAsync(pk_servicio);
         }
 
-        public Task<List<SServicio>> ListarServiciosSinMateriales()
+        // MÉTODOS PARA OBTENER SERVICIOS CON DATOS DE CLIENTE
+        public async Task<List<SServicoDTO>> ObtenerServiciosConDatosClienteAsync()
         {
-            return _servicioRepositorio.ListarServiciosSinMateriales();
+            return await _servicioRepositorio.ObtenerServiciosConDatosClienteAsync();
         }
 
-        public Task<List<SServicio>> ListarServiciosPorCliente(int fk_cliente)
+        public async Task<List<SServicio>> ListarServiciosConDetallesCliente()
         {
-            return _servicioRepositorio.ListarServiciosPorCliente(fk_cliente);
+            return await _servicioRepositorio.ListarServiciosConDetallesCliente();
         }
 
-        public Task<List<SServicio>> ListarServiciosPorTipoFactura(string tipoFactura)
+        // MÉTODO DE BÚSQUEDA AVANZADA
+        public async Task<List<SServicoDTO>> BuscarServiciosPorCriterioDTO(string criterio, string busqueda)
         {
-            return _servicioRepositorio.ListarServiciosPorTipoFactura(tipoFactura);
-        }
-
-        public Task<bool> CambiarRequiereMaterial(int pk_servicio, bool requiereMaterial)
-        {
-            return _servicioRepositorio.CambiarRequiereMaterial(pk_servicio, requiereMaterial);
+            return await _servicioRepositorio.BuscarServiciosPorCriterioDTO(criterio, busqueda);
         }
     }
 }
