@@ -18,10 +18,7 @@ namespace Novusnet.Dominio.Modelo.Abstracciones
         Task<Cliente> ClienteGetByIdAsync(int id);
         Task ClienteUpdateAsync(Cliente entidad);
        
-        //Task<List<Empleado>> EmpleadoGetAllAsync();
-        // Consultas adicionales útiles
-        Task<ClienteDTO> ObtenerClientePorCedula(string cedula);
-        Task<List<ClienteDTO>> ClientesPorEstado(bool activo);
+       
        
 
     }

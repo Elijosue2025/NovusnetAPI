@@ -14,24 +14,41 @@ namespace Novusnet.Aplicacion.Servicio
     public interface IServicio
 
     {
+        // Métodos CRUD básicos
         [OperationContract]
-
-        Task ServicioAddAsync(SServicio entidad); //metdo para insertar
-
-        [OperationContract]
-        Task ServicioUpdateAsync(SServicio entidad); //metodo para actualizar 
+        Task ServicioAddAsync(SServicio entidad);
 
         [OperationContract]
-        Task ServicioDeleteAsync(int entidad);//metdo para eliminar
+        Task ServicioUpdateAsync(SServicio entidad);
 
         [OperationContract]
-        Task<IEnumerable<SServicio>> ServicioGetAllAsync(); //metodo lista de todos los registros (select * from)
+        Task ServicioDeleteAsync(int entidad);
 
         [OperationContract]
-        Task<SServicio> ServicioGetByIdAsync(int id); //metodo para buscar un registro por id (select * from where id = @id)
+        Task<IEnumerable<SServicio>> ServicioGetAllAsync();
 
         [OperationContract]
+        Task<SServicio> ServicioGetByIdAsync(int id);
 
+        // Métodos de búsqueda
+        [OperationContract]
+        Task<List<SServicio>> BuscarServiciosPorCriterio(string criterio, string busqueda);
+
+        // Métodos específicos de negocio
+        [OperationContract]
         Task<List<SServicio>> ListarServiciosConMateriales();
+
+        [OperationContract]
+        Task<List<SServicio>> ListarServiciosSinMateriales();
+
+        [OperationContract]
+        Task<List<SServicio>> ListarServiciosPorCliente(int fk_cliente);
+
+        [OperationContract]
+        Task<List<SServicio>> ListarServiciosPorTipoFactura(string tipoFactura);
+
+        [OperationContract]
+        Task<bool> CambiarRequiereMaterial(int pk_servicio, bool requiereMaterial);
+
     }
 }

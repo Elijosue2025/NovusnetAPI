@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Novusnet.Infraestructura.AccesoDatos;
 
@@ -22,6 +23,7 @@ public partial class Material
     public int? ma_stock_minimo { get; set; }
 
     public string ma_duracion { get; set; }
+    [JsonIgnore]
 
     public virtual ICollection<Orden_Material> Orden_Material { get; set; } = new List<Orden_Material>();
 }

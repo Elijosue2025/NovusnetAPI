@@ -205,7 +205,9 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
                 var empleado = await _novusnetPROContext.Empleado.FindAsync(pk_Empleado);
                 if (empleado != null)
                 {
-                    empleado.emp_activo = nuevoEstado =="0";
+                    empleado.emp_activo = 0;
+
+
                     await _novusnetPROContext.SaveChangesAsync();
                     return true;
                 }

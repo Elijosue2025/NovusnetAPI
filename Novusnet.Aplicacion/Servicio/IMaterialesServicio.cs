@@ -12,25 +12,42 @@ namespace Novusnet.Aplicacion.Servicio
     public interface IMaterialesServicio
     {
 
-        [OperationContract]
 
-        Task MaterialAddAsync(Material entidad); //metdo para insertar
-
+        // Métodos CRUD básicos
         [OperationContract]
-        Task MaterialUpdateAsync(Material entidad); //metodo para actualizar 
+        Task MaterialAddAsync(Material entidad);
 
         [OperationContract]
-        Task MaterialDeleteAsync(int entidad);//metdo para eliminar
+        Task MaterialUpdateAsync(Material entidad);
 
         [OperationContract]
-        Task<IEnumerable<Material>> MaterialGetAllAsync(); //metodo lista de todos los registros (select * from)
+        Task MaterialDeleteAsync(int entidad);
 
         [OperationContract]
-        Task<Material> MaterialGetByIdAsync(int id); //metodo para buscar un registro por id (select * from where id = @id)
+        Task<IEnumerable<Material>> MaterialGetAllAsync();
 
         [OperationContract]
+        Task<Material> MaterialGetByIdAsync(int id);
 
+        // Métodos de búsqueda
+        [OperationContract]
+        Task<List<Material>> BuscarMaterialesPorCriterio(string criterio, string busqueda);
+
+        // Métodos específicos de negocio
+        [OperationContract]
         Task<List<Material>> ListarMaterialStock();
+
+        [OperationContract]
+        Task<List<Material>> ListarMaterialesBajoStock();
+
+        [OperationContract]
+        Task<bool> ActualizarStock(int pk_material, int nuevoStock);
+
+        [OperationContract]
+        Task<bool> ReducirStock(int pk_material, int cantidad);
+
+        [OperationContract]
+        Task<bool> AumentarStock(int pk_material, int cantidad);
 
 
 
