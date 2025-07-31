@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 namespace Novusnet.Aplicacion.DTO.DTOS
 {
     public class OrdenMateriales
+
     {
+        /// <summary>
+        /// Empleado
+        /// </summary>
         public int pk_Empleado { get; set; }
 
         public string emp_roll { get; set; }
@@ -17,6 +21,9 @@ namespace Novusnet.Aplicacion.DTO.DTOS
         public string emp_apellido { get; set; }
 
         public string emp_cedula { get; set; }
+        /// <summary>
+        /// Orden material
+        /// </summary>
 
         public int pk_orden_material { get; set; }
 
@@ -31,5 +38,8 @@ namespace Novusnet.Aplicacion.DTO.DTOS
         public DateTime? orma_fecha_uso { get; set; }
 
         public int fk_material { get; set; }
+        ////
+        ///Servicio
+
     }
 }

@@ -363,7 +363,7 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
             try
             {
                 return await _context.Empleado
-                    .Where(e => e.emp_activo == true)
+                    .Where(e => e.emp_activo == 1)
                     .Select(e => new
                     {
                         pk_Empleado = e.pk_Empleado,
