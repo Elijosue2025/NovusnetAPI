@@ -31,6 +31,7 @@ internal class Program
         builder.Services.AddScoped<IMaterialesServicio, MaterialesServicioImpl>();
         builder.Services.AddScoped<IServicio, ServicioImpl>();
         builder.Services.AddScoped<IOrdenTrabajoServicio, OrdenTrabajoServicioImpl>();
+        builder.Services.AddScoped<IOrdenMaterialServicio, OrdenMaterialServicioImpl>();
 
 
         //   builder.Services.AddScoped<IEmpleadoServicio, EmpleadoServicioImpl>();

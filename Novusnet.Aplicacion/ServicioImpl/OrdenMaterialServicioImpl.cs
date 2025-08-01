@@ -1,51 +1,64 @@
-﻿using Novusnet.Dominio.Modelo.Abstracciones;
+﻿using Novusnet.Aplicacion.DTO.DTOS;
+using Novusnet.Aplicacion.Servicio;
+using Novusnet.Dominio.Modelo.Abstracciones;
 using Novusnet.Infraestructura.AccesoDatos;
 using Novusnet.Infraestructura.AccesoDatos.Repositorio;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Novusnet.Aplicacion.ServicioImpl
 {
-    public class OrdenMaterialServicioImpl : IOrdenMaterialRepositorio
+    public class OrdenMaterialServicioImpl : IOrdenMaterialServicio
     {
-        private IOrdenMaterialRepositorio _ordenMaterialRepositorio;
-
         private readonly NovusnetPROContext _dBContext;
+        private readonly IOrdenMaterialRepositorio _ordenMaterialRepositorio;
 
         public OrdenMaterialServicioImpl(NovusnetPROContext dBContext)
         {
-            this._dBContext = dBContext;
-            _ordenMaterialRepositorio = new OrdenMaterialServicioImpl(_dBContext);
-
-
+            _dBContext = dBContext;
+            _ordenMaterialRepositorio = new OrdenMaterialRepositorioImpl(_dBContext);
         }
 
-        public async Task AddAsync(Orden_Material entidad)
+        public async Task<List<OrdenMaterialDTO>> FiltrarOrdenesTrabajoPorCriteriosAsync(string criterio, string busqueda)
         {
-            await _ordenMaterialRepositorio.AddAsync(entidad);
+            return await _ordenMaterialRepositorio.FiltrarOrdenesTrabajoPorCriteriosAsync(criterio, busqueda);
         }
 
-        public async Task UpdateAsync(Orden_Material entidad)
+        public async Task<List<OrdenMaterialDTO>> ObtenerOrdenesTrabajoCompletasConMaterialesAsync()
         {
-            await _ordenMaterialRepositorio.UpdateAsync(entidad);
+            return await _ordenMaterialRepositorio.ObtenerOrdenesTrabajoCompletasConMaterialesAsync();
         }
 
-        public async Task DeleteAsync(int entidad)
+        public async Task Orden(int pk_orden_material)
         {
-            await _ordenMaterialRepositorio.DeleteAsync(entidad);
+            // Método reservado si deseas extender funcionalidad adicional.
+            await Task.CompletedTask;
         }
 
-        public Task<IEnumerable<Orden_Material>> GetAllAsync()
+        public async Task OrdenMaterialAddAsync(Orden_Material entidad)
         {
-            return _ordenMaterialRepositorio.GetAllAsync();
+            await _ordenMaterialRepositorio.OrdenMaterialAddAsync(entidad);
         }
 
-        public Task<Orden_Material> GetByIdAsync(int id)
+        public async Task OrdenMaterialDeleteAsync(int pk_orden_material)
         {
-            return _ordenMaterialRepositorio.GetByIdAsync(id);
+            await _ordenMaterialRepositorio.OrdenMaterialDeleteAsync(pk_orden_material);
+        }
+
+        public async Task<List<Orden_Material>> OrdenMaterialGetAllAsync()
+        {
+            return await _ordenMaterialRepositorio.OrdenMaterialGetAllAsync();
+        }
+
+        public async Task<Orden_Material> OrdenMaterialGetByIdAsync(int pk_orden_material)
+        {
+            return await _ordenMaterialRepositorio.OrdenMaterialGetByIdAsync(pk_orden_material);
+        }
+
+        public async Task OrdenMaterialUpdateAsync(Orden_Material entidad)
+        {
+            await _ordenMaterialRepositorio.OrdenMaterialUpdateAsync(entidad);
         }
     }
 }
+
