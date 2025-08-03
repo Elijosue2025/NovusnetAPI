@@ -24,6 +24,7 @@ namespace Novusnet.Aplicacion.ServicioImpl
 
 
         }
+
         public async Task ClienteAddAsync(Cliente entidad)
         {
             await _clienteRepositorio.AddAsync(entidad);
@@ -31,47 +32,41 @@ namespace Novusnet.Aplicacion.ServicioImpl
 
         }
 
-        async Task IClienteServicio.ClienteDeleteAsync(int entidad)
-        {
-
-            await _clienteRepositorio.DeleteAsync(entidad);
-        }
-
-        async Task<IEnumerable<Cliente>> IClienteServicio.ClienteGetAllAsync()
-        {
-            return await _clienteRepositorio.GetAllAsync();
-        }
-
-        async Task<Cliente> IClienteServicio.ClienteGetByIdAsync(int id)
-        {
-            return await _clienteRepositorio.GetByIdAsync(id);
-        }
-
-        async Task IClienteServicio.ClienteUpdateAsync(Cliente entidad)
+        public async Task ClienteUpdateAsync(Cliente entidad)
         {
             await _clienteRepositorio.UpdateAsync(entidad);
         }
 
-        private IClienteRepositorio Get_clienteRepositorio()
+        public async Task ClienteDeleteAsync(int entidad)
         {
-            return _clienteRepositorio;
+            await _clienteRepositorio.DeleteAsync(entidad);
         }
 
-
-
-        public Task<List<Cliente>> ListarClientesActivos()
+        public async Task<IEnumerable<Cliente>> ClienteGetAllAsync()
         {
-            return _clienteRepositorio.ListarClientesActivos();
+            return await _clienteRepositorio.GetAllAsync(); 
         }
 
-        public Task ObtenerClientePorCedula(string cedula)
+        public async Task<Cliente> ClienteGetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+           return await _clienteRepositorio.GetByIdAsync(id);
         }
 
-        public Task ClientesPorEstado(bool activo)
+     
+
+        public async Task<bool> CambiarEstadoCliente(int id, bool nuevoEstado)
         {
-            throw new NotImplementedException();
+            return await _clienteRepositorio.CambiarEstadoCliente(id, nuevoEstado);
+        }
+
+        public async Task<List<Cliente>> BuscarClientesPorCriterio(string criterio, string busqueda)
+        {
+            return await _clienteRepositorio.BuscarClientesPorCriterio(criterio, busqueda);
+        }
+
+        public async Task<List<Cliente>> ClientesPorEstado(bool activo)
+        {
+            return await _clienteRepositorio.ClientesPorEstado(activo);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Novusnet.Dominio.Modelo.Abstracciones;
+﻿using Novusnet.Aplicacion.DTO.DTOS;
+using Novusnet.Dominio.Modelo.Abstracciones;
 using Novusnet.Infraestructura.AccesoDatos;
 using System;
 using System.Collections.Generic;
@@ -16,29 +17,29 @@ namespace Novusnet.Aplicacion.Servicio
 
 
         [OperationContract]
-
         Task ClienteAddAsync(Cliente entidad); //metdo para insertar
 
         [OperationContract]
-        Task ClienteUpdateAsync(Cliente entidad); //metodo para actualizar 
+        Task ClienteUpdateAsync(Cliente entidad);
 
         [OperationContract]
-        Task ClienteDeleteAsync(int entidad);//metdo para eliminar
+        Task ClienteDeleteAsync(int entidad);
 
         [OperationContract]
-        Task<IEnumerable<Cliente>> ClienteGetAllAsync(); //metodo lista de todos los registros (select * from)
+        Task<IEnumerable<Cliente>> ClienteGetAllAsync();
 
         [OperationContract]
-        Task<Cliente> ClienteGetByIdAsync(int id); //metodo para buscar un registro por id (select * from where id = @id)
+        Task<Cliente> ClienteGetByIdAsync(int id);
 
         [OperationContract]
+        Task<List<Cliente>> ClientesPorEstado(bool activo);
 
-        Task<List<Cliente>> ListarClientesActivos();
+
+
         [OperationContract]
+        Task<bool> CambiarEstadoCliente(int id, bool nuevoEstado);
 
-        Task ObtenerClientePorCedula(string cedula);
         [OperationContract]
-
-        Task ClientesPorEstado(bool activo);
+        Task<List<Cliente>> BuscarClientesPorCriterio(string criterio, string busqueda);
     }
 }

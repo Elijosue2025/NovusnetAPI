@@ -11,15 +11,12 @@ namespace Novusnet.Dominio.Modelo.Abstracciones
 
     public interface IClienteRepositorio : IRepositorio<Cliente>
     {
-        Task<List<Cliente>> ListarClientesActivos();
-        Task ClienteAddAsync(Cliente entidad);
-        Task ClienteDeleteAsync(int entidad);
-        Task<IEnumerable<Cliente>> ClienteGetAllAsync();
-        Task<Cliente> ClienteGetByIdAsync(int id);
-        Task ClienteUpdateAsync(Cliente entidad);
-       
-       
-       
+         Task ClienteUpdateAsync(Cliente entidad);
+        Task<List<Cliente>> ClientesPorEstado(bool activo);
 
+
+         Task ClienteAddAsync(Cliente entidad);
+         Task<List<Cliente>> BuscarClientesPorCriterio(string criterio, string busqueda);
+         Task<bool> CambiarEstadoCliente(int pk_cliente, bool nuevoEstado);
     }
 }

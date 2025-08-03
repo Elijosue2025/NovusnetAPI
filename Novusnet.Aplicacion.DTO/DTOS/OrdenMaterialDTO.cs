@@ -34,6 +34,8 @@ namespace Novusnet.Aplicacion.DTO.DTOS
 
         // Servicio
         public int pk_servicio { get; set; }
+        public string ser_codigo { get; set; }
+
         public string ser_nombre { get; set; }
         public decimal? ser_precio { get; set; }
         public string ser_descripcion { get; set; }
