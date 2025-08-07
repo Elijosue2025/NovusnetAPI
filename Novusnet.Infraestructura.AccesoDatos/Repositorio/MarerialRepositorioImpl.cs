@@ -85,19 +85,58 @@ namespace Novusnet.Infraestructura.AccesoDatos.Repositorio
         {
             try
             {
+                Console.WriteLine($"=== REPOSITORIO: Eliminación lógica del material {pk_material} ===");
+
                 var material = await _novusnetPROContext.Material.FindAsync(pk_material);
                 if (material != null)
                 {
-                    _novusnetPROContext.Material.Remove(material);
+                    Console.WriteLine($"Material encontrado:");
+                    Console.WriteLine($"  - ID: {material.pk_material}");
+                    Console.WriteLine($"  - Código: {material.ma_codigo}");
+                    Console.WriteLine($"  - Nombre: {material.ma_nombre}");
+                    Console.WriteLine($"  - Stock actual: {material.ma_stock_actual}");
+                    Console.WriteLine($"  - Stock mínimo: {material.ma_stock_minimo}");
+
+                    // ELIMINACIÓN LÓGICA: Cambiar stock actual a 0
+                    int stockAnterior = material.ma_stock_actual ?? 0;
+                    material.ma_stock_actual = 0;
+
+                    // También puedes cambiar el stock mínimo a 0 si quieres marcarlo como "eliminado"
+                    // material.ma_stock_minimo = 0;
+
+                    Console.WriteLine($"Cambiando stock de {stockAnterior} a 0...");
+
+                    // Marcar como modificado y guardar
+                    _novusnetPROContext.Material.Update(material);
                     await _novusnetPROContext.SaveChangesAsync();
+
+                    Console.WriteLine($"✅ ELIMINACIÓN LÓGICA EXITOSA:");
+                    Console.WriteLine($"  - Material ID: {pk_material}");
+                    Console.WriteLine($"  - Stock anterior: {stockAnterior}");
+                    Console.WriteLine($"  - Stock actual: {material.ma_stock_actual}");
+                    Console.WriteLine($"  - El material sigue existiendo en la BD pero con stock 0");
                 }
                 else
                 {
-                    throw new Exception("Material no encontrado.");
+                    Console.WriteLine($"❌ Material con ID {pk_material} no encontrado en la base de datos");
+                    throw new Exception($"Material con ID {pk_material} no encontrado.");
                 }
+            }
+            catch (DbUpdateException dbEx)
+            {
+                Console.WriteLine($"❌ Error de base de datos al actualizar material {pk_material}:");
+                Console.WriteLine($"   Mensaje: {dbEx.Message}");
+                if (dbEx.InnerException != null)
+                {
+                    Console.WriteLine($"   Error interno: {dbEx.InnerException.Message}");
+                }
+                throw new Exception("Error de base de datos al eliminar material", dbEx);
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"❌ Error general al eliminar material {pk_material}:");
+                Console.WriteLine($"   Mensaje: {ex.Message}");
+                Console.WriteLine($"   Stack trace: {ex.StackTrace}");
                 throw new Exception("Error al eliminar material", ex);
             }
         }

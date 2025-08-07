@@ -42,24 +42,81 @@ namespace NovusnetAPIWeb.Controllers
         {
             try
             {
+                Console.WriteLine($"=== API: Eliminación lógica del material {pk_material} ===");
+
                 if (pk_material <= 0)
                 {
-                    return BadRequest("ID de material inválido");
+                    Console.WriteLine($"❌ Error: ID inválido - {pk_material}");
+                    return BadRequest(new
+                    {
+                        error = "ID de material inválido",
+                        pk_material = pk_material
+                    });
                 }
 
+                // Verificar que el material existe
                 var materialExistente = await _materialServicio.MaterialGetByIdAsync(pk_material);
                 if (materialExistente == null)
                 {
-                    return NotFound($"Material con ID {pk_material} no encontrado");
+                    Console.WriteLine($"❌ Error: Material {pk_material} no encontrado");
+                    return NotFound(new
+                    {
+                        error = $"Material con ID {pk_material} no encontrado"
+                    });
                 }
 
+                Console.WriteLine($"✅ Material encontrado:");
+                Console.WriteLine($"   - Código: {materialExistente.ma_codigo}");
+                Console.WriteLine($"   - Nombre: {materialExistente.ma_nombre}");
+                Console.WriteLine($"   - Stock actual: {materialExistente.ma_stock_actual}");
+
+                // Verificar si ya está eliminado lógicamente
+                if (materialExistente.ma_stock_actual == 0)
+                {
+                    Console.WriteLine($"⚠️ Advertencia: Material {pk_material} ya está eliminado (stock = 0)");
+                    return Ok(new
+                    {
+                        message = "Material ya estaba eliminado",
+                        id = pk_material,
+                        warning = "El material ya tenía stock 0",
+                        action = "no_action_needed"
+                    });
+                }
+
+                // Guardar stock anterior para el response
+                int stockAnterior = materialExistente.ma_stock_actual ?? 0;
+
+                // Proceder con la eliminación lógica
+                Console.WriteLine($"🔄 Procediendo con eliminación lógica (stock {stockAnterior} → 0)...");
                 await _materialServicio.MaterialDeleteAsync(pk_material);
-                return Ok(new { message = "Material eliminado exitosamente", id = pk_material });
+
+                Console.WriteLine($"✅ Material {pk_material} eliminado exitosamente");
+
+                return Ok(new
+                {
+                    message = "Material eliminado exitosamente",
+                    id = pk_material,
+                    codigo = materialExistente.ma_codigo,
+                    nombre = materialExistente.ma_nombre,
+                    action = "eliminacion_logica",
+                    stock_anterior = stockAnterior,
+                    stock_actual = 0,
+                    nota = "El material sigue existiendo en la base de datos pero con stock 0"
+                });
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al eliminar material: {ex.Message}");
-                return StatusCode(500, new { error = "Error al eliminar material", details = ex.Message });
+                Console.WriteLine($"❌ Error al eliminar material {pk_material}:");
+                Console.WriteLine($"   Mensaje: {ex.Message}");
+                Console.WriteLine($"   Stack trace: {ex.StackTrace}");
+
+                return StatusCode(500, new
+                {
+                    error = "Error al eliminar material",
+                    details = ex.Message,
+                    pk_material = pk_material,
+                    timestamp = DateTime.Now
+                });
             }
         }
 
